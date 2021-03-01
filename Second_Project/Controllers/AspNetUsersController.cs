@@ -23,7 +23,9 @@ namespace Second_Project.Controllers
         [Authorize(Roles = "admin")]
         public async Task<IActionResult> Index()
         {
-            return View(await _context.AspNetUsers.ToListAsync());
+            var find = await _context.AspNetUsers.ToListAsync();
+            var finByProc = await _context.AspNetUsers.FromSqlRaw<AspNetUser>("FinProc").ToListAsync();
+            return View(find);
         }
 
         // GET: AspNetUsers/Details/5
