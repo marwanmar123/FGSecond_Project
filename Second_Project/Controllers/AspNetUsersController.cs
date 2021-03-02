@@ -25,7 +25,7 @@ namespace Second_Project.Controllers
         {
             var find = await _context.AspNetUsers.ToListAsync();
             var finByProc = await _context.AspNetUsers.FromSqlRaw<AspNetUser>("FinProc").ToListAsync();
-            return View(find);
+            return View(finByProc);
         }
 
         // GET: AspNetUsers/Details/5

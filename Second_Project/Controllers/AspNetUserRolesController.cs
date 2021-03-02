@@ -51,7 +51,7 @@ namespace Second_Project.Controllers
         public IActionResult Create()
         {
             ViewData["RoleId"] = new SelectList(_context.AspNetRoles, "Id", "Id");
-            ViewData["UserId"] = new SelectList(_context.AspNetUsers, "Id", "Id");
+            ViewData["UserId"] = new SelectList(_context.AspNetUsers, "Id", "UserName");
             return View();
         }
 
@@ -69,7 +69,7 @@ namespace Second_Project.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["RoleId"] = new SelectList(_context.AspNetRoles, "Id", "Id", aspNetUserRole.RoleId);
-            ViewData["UserId"] = new SelectList(_context.AspNetUsers, "Id", "Id", aspNetUserRole.UserId);
+            ViewData["UserId"] = new SelectList(_context.AspNetUsers, "Id", "UserName", aspNetUserRole.UserId);
             return View(aspNetUserRole);
         }
 
@@ -87,7 +87,7 @@ namespace Second_Project.Controllers
                 return NotFound();
             }
             ViewData["RoleId"] = new SelectList(_context.AspNetRoles, "Id", "Id", aspNetUserRole.RoleId);
-            ViewData["UserId"] = new SelectList(_context.AspNetUsers, "Id", "Id", aspNetUserRole.UserId);
+            ViewData["UserId"] = new SelectList(_context.AspNetUsers, "Id", "UserName", aspNetUserRole.UserId);
             return View(aspNetUserRole);
         }
 
@@ -124,7 +124,7 @@ namespace Second_Project.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["RoleId"] = new SelectList(_context.AspNetRoles, "Id", "Id", aspNetUserRole.RoleId);
-            ViewData["UserId"] = new SelectList(_context.AspNetUsers, "Id", "Id", aspNetUserRole.UserId);
+            ViewData["UserId"] = new SelectList(_context.AspNetUsers, "Id", "UserName", aspNetUserRole.UserId);
             return View(aspNetUserRole);
         }
 
