@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -20,7 +19,6 @@ namespace Second_Project.Controllers
         }
 
         // GET: AspNetUserRoles
-        [Authorize(Roles = "admin")]
         public async Task<IActionResult> Index()
         {
             var studentsContext = _context.AspNetUserRoles.Include(a => a.Role).Include(a => a.User);
@@ -69,25 +67,25 @@ namespace Second_Project.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["RoleId"] = new SelectList(_context.AspNetRoles, "Id", "Id", aspNetUserRole.RoleId);
-            ViewData["UserId"] = new SelectList(_context.AspNetUsers, "Id", "UserName", aspNetUserRole.UserId);
+            ViewData["UserId"] = new SelectList(_context.AspNetUsers, "Id", "Id", aspNetUserRole.UserId);
             return View(aspNetUserRole);
         }
 
         // GET: AspNetUserRoles/Edit/5
-        public async Task<IActionResult> Edit(string id)
+        public async Task<IActionResult> Edit(string UserId, string RoleId)
         {
-            if (id == null)
+            if (UserId == null || RoleId == null)
             {
                 return NotFound();
             }
 
-            var aspNetUserRole = await _context.AspNetUserRoles.FindAsync(id);
+            var aspNetUserRole = await _context.AspNetUserRoles.FindAsync(UserId, RoleId);
             if (aspNetUserRole == null)
             {
                 return NotFound();
             }
             ViewData["RoleId"] = new SelectList(_context.AspNetRoles, "Id", "Id", aspNetUserRole.RoleId);
-            ViewData["UserId"] = new SelectList(_context.AspNetUsers, "Id", "UserName", aspNetUserRole.UserId);
+            ViewData["UserId"] = new SelectList(_context.AspNetUsers, "Id", "Id", aspNetUserRole.UserId);
             return View(aspNetUserRole);
         }
 
@@ -96,9 +94,9 @@ namespace Second_Project.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("UserId,RoleId")] AspNetUserRole aspNetUserRole)
+        public async Task<IActionResult> Edit(string RoleId, string UserId, [Bind("UserId,RoleId")] AspNetUserRole aspNetUserRole)
         {
-            if (id != aspNetUserRole.UserId)
+            if (RoleId != aspNetUserRole.RoleId && UserId != aspNetUserRole.UserId)
             {
                 return NotFound();
             }
@@ -112,7 +110,7 @@ namespace Second_Project.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!AspNetUserRoleExists(aspNetUserRole.UserId))
+                    if (!AspNetUserRoleExists(aspNetUserRole.RoleId) && !AspNetUserRoleExists(aspNetUserRole.UserId))
                     {
                         return NotFound();
                     }
@@ -124,7 +122,7 @@ namespace Second_Project.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["RoleId"] = new SelectList(_context.AspNetRoles, "Id", "Id", aspNetUserRole.RoleId);
-            ViewData["UserId"] = new SelectList(_context.AspNetUsers, "Id", "UserName", aspNetUserRole.UserId);
+            ViewData["UserId"] = new SelectList(_context.AspNetUsers, "Id", "Id", aspNetUserRole.UserId);
             return View(aspNetUserRole);
         }
 
@@ -151,9 +149,9 @@ namespace Second_Project.Controllers
         // POST: AspNetUserRoles/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(string id)
+        public async Task<IActionResult> DeleteConfirmed(string RoleId, string UserId)
         {
-            var aspNetUserRole = await _context.AspNetUserRoles.FindAsync(id);
+            var aspNetUserRole = await _context.AspNetUserRoles.FindAsync(UserId, RoleId);
             _context.AspNetUserRoles.Remove(aspNetUserRole);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
@@ -161,7 +159,7 @@ namespace Second_Project.Controllers
 
         private bool AspNetUserRoleExists(string id)
         {
-            return _context.AspNetUserRoles.Any(e => e.UserId == id);
+            return _context.AspNetUserRoles.Any(e => e.RoleId == id);
         }
     }
 }
