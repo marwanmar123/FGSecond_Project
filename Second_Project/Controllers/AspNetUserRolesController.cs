@@ -72,59 +72,63 @@ namespace Second_Project.Controllers
         }
 
         // GET: AspNetUserRoles/Edit/5
-        public async Task<IActionResult> Edit(string UserId, string RoleId)
-        {
-            if (UserId == null || RoleId == null)
-            {
-                return NotFound();
-            }
+        //public async Task<IActionResult> Edit(string RoleId, string UserId)
+        //{
 
-            var aspNetUserRole = await _context.AspNetUserRoles.FindAsync(UserId, RoleId);
-            if (aspNetUserRole == null)
-            {
-                return NotFound();
-            }
-            ViewData["RoleId"] = new SelectList(_context.AspNetRoles, "Id", "Id", aspNetUserRole.RoleId);
-            ViewData["UserId"] = new SelectList(_context.AspNetUsers, "Id", "Id", aspNetUserRole.UserId);
-            return View(aspNetUserRole);
-        }
+        //    if (UserId == null || RoleId == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-        // POST: AspNetUserRoles/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string RoleId, string UserId, [Bind("UserId,RoleId")] AspNetUserRole aspNetUserRole)
-        {
-            if (RoleId != aspNetUserRole.RoleId && UserId != aspNetUserRole.UserId)
-            {
-                return NotFound();
-            }
+        //    var aspNetUserRole = await _context.AspNetUserRoles.FindAsync(UserId, RoleId);
+        //    if (aspNetUserRole == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    ViewData["RoleId"] = new SelectList(_context.AspNetRoles, "Id", "Id", aspNetUserRole.RoleId);
+        //    ViewData["UserId"] = new SelectList(_context.AspNetUsers, "Id", "Id", aspNetUserRole.UserId);
+        //    return RedirectToAction("Create");
+        //}
 
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(aspNetUserRole);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!AspNetUserRoleExists(aspNetUserRole.RoleId) && !AspNetUserRoleExists(aspNetUserRole.UserId))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["RoleId"] = new SelectList(_context.AspNetRoles, "Id", "Id", aspNetUserRole.RoleId);
-            ViewData["UserId"] = new SelectList(_context.AspNetUsers, "Id", "Id", aspNetUserRole.UserId);
-            return View(aspNetUserRole);
-        }
+        //// POST: AspNetUserRoles/Edit/5
+        //// To protect from overposting attacks, enable the specific properties you want to bind to.
+        //// For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Edit(string UserId, string RoleId, [Bind("UserId,RoleId")] AspNetUserRole aspNetUserRole)
+        //{
+
+        //    //if (RoleId != aspNetUserRole.RoleId && UserId != aspNetUserRole.UserId)
+        //    //{
+        //    //    return NotFound();
+        //    //}
+
+        //    if (ModelState.IsValid)
+        //    {
+        //        try
+        //        {
+        //            var aspNetUserRole = await _context.AspNetUserRoles.FindAsync(UserId, RoleId);
+        //            _context.AspNetUserRoles.Remove(aspNetUserRole);
+        //            await _context.SaveChangesAsync();
+        //        }
+        //        catch (DbUpdateConcurrencyException)
+        //        {
+        //            //if (!AspNetUserRoleExists(aspNetUserRole.RoleId) && !AspNetUserRoleExists(aspNetUserRole.UserId))
+        //            //{
+        //            //    return NotFound();
+        //            //}
+        //            //else
+        //            //{
+        //            //    throw;
+        //            //}
+        //        }
+        //        return RedirectToAction(nameof(Create));
+        //    }
+        //    ViewData["RoleId"] = new SelectList(_context.AspNetRoles, "Id", "Id", aspNetUserRole.RoleId);
+        //    ViewData["UserId"] = new SelectList(_context.AspNetUsers, "Id", "Id", aspNetUserRole.UserId);
+
+        //    return RedirectToAction("Create");
+        //}
 
         // GET: AspNetUserRoles/Delete/5
         public async Task<IActionResult> Delete(string id)
@@ -157,9 +161,9 @@ namespace Second_Project.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool AspNetUserRoleExists(string id)
-        {
-            return _context.AspNetUserRoles.Any(e => e.RoleId == id);
-        }
+        //private bool AspNetUserRoleExists(string id)
+        //{
+        //    return _context.AspNetUserRoles.Any(e => e.RoleId == id);
+        //}
     }
 }
